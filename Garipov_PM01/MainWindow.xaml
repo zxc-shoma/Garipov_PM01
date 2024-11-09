@@ -1,0 +1,27 @@
+﻿<Window x:Class="Garipov_PM01.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Garipov_PM01"
+        mc:Ignorable="d"
+        Title="Поликлиника" Height="600" Width="1000" MinWidth="1000" FontFamily="Lucida Sans" Icon="image/icon.ico"  >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+
+        
+        <TextBlock Text="Поликлиника" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" ></TextBlock>
+        <Image Source="image/logo.png" Margin="-148,0,148,0" ></Image>
+
+       
+        
+
+        <Frame Grid.Row="1" Name="MainFrame" NavigationUIVisibility="Hidden"></Frame>
+        
+
+    </Grid>
+</Window>

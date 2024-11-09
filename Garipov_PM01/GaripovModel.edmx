@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище PolyclinicModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DEPARTAMENT">
+          <Key>
+            <PropertyRef Name="DEPARTAMENT_ID" />
+          </Key>
+          <Property Name="DEPARTAMENT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DEPARTAMENT_NAME" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DEPARTAMENT_FLOOR" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DEPARTAMENT_MANAGER" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DIAGNOSIS">
+          <Key>
+            <PropertyRef Name="DIAGNOSIS_ID" />
+          </Key>
+          <Property Name="DIAGNOSIS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DIAGNOSIS_NAME" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DIAGNOSIS_SIGNS" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DIAGNOSIS_PERIOD" Type="nvarchar(max)" />
+          <Property Name="DIAGNOSIS_PURPOSE" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="DOCTORS">
+          <Key>
+            <PropertyRef Name="DOCTOR_ID" />
+          </Key>
+          <Property Name="DOCTOR_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DOCTOR_NAME" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DOCTOR_SURNAME" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DOCTOR_PATRONYMIC" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DOCTOR_POST" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DOCTOR_SCIENTIFIC" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DOCTOR_EXPERIENCE" Type="date" Nullable="false" />
+          <Property Name="DOCTOR_ADRESS" Type="nvarchar(max)" />
+          <Property Name="DOCTOR_DEPARTAMENT_ID" Type="int" Nullable="false" />
+          <Property Name="DOCTOR_WORK" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="DOCTOR_PHOTO" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="MEDICAL_HISTORY">
+          <Key>
+            <PropertyRef Name="HISTORY_ID" />
+          </Key>
+          <Property Name="HISTORY_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HISTORY_DOCTOR_ID" Type="int" Nullable="false" />
+          <Property Name="HISTORY_PATIENT_ID" Type="int" Nullable="false" />
+          <Property Name="HISTORY_DIAGNOSIS_ID" Type="int" Nullable="false" />
+          <Property Name="HISTORY_TREATMENT" Type="nvarchar(max)" />
+          <Property Name="HISTORY_DATE_OFF_ILLNESS" Type="date" Nullable="false" />
+          <Property Name="HISTORY_DATE_OFF_RECOVERY" Type="date" />
+          <Property Name="HISTORY_TYPE_OFF_TREARMENT" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PATIENTS">
+          <Key>
+            <PropertyRef Name="PATIENT_ID" />
+          </Key>
+          <Property Name="PATIENT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PATIENT_NAME" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PATIENT_SURNAME" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PATIENT_PATRONYMIC" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PATIENT_ADRESS" Type="nvarchar(max)" />
+          <Property Name="PATIENT_CITY" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PATIENT_BIRTHDATE" Type="date" Nullable="false" />
+          <Property Name="PATIENT_GENDER" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PATIENT_AGE" Type="int" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <Association Name="FK_DOCTORS_DEPARTAMENT">
+          <End Role="DEPARTAMENT" Type="Self.DEPARTAMENT" Multiplicity="1" />
+          <End Role="DOCTORS" Type="Self.DOCTORS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTAMENT">
+              <PropertyRef Name="DEPARTAMENT_ID" />
+            </Principal>
+            <Dependent Role="DOCTORS">
+              <PropertyRef Name="DOCTOR_DEPARTAMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MEDICAL HISTORY_DIAGNOSIS">
+          <End Role="DIAGNOSIS" Type="Self.DIAGNOSIS" Multiplicity="1" />
+          <End Role="MEDICAL_HISTORY" Type="Self.MEDICAL_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DIAGNOSIS">
+              <PropertyRef Name="DIAGNOSIS_ID" />
+            </Principal>
+            <Dependent Role="MEDICAL_HISTORY">
+              <PropertyRef Name="HISTORY_DIAGNOSIS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MEDICAL HISTORY_DOCTORS">
+          <End Role="DOCTORS" Type="Self.DOCTORS" Multiplicity="1" />
+          <End Role="MEDICAL_HISTORY" Type="Self.MEDICAL_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DOCTORS">
+              <PropertyRef Name="DOCTOR_ID" />
+            </Principal>
+            <Dependent Role="MEDICAL_HISTORY">
+              <PropertyRef Name="HISTORY_DOCTOR_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MEDICAL HISTORY_PATIENTS">
+          <End Role="PATIENTS" Type="Self.PATIENTS" Multiplicity="1" />
+          <End Role="MEDICAL_HISTORY" Type="Self.MEDICAL_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PATIENTS">
+              <PropertyRef Name="PATIENT_ID" />
+            </Principal>
+            <Dependent Role="MEDICAL_HISTORY">
+              <PropertyRef Name="HISTORY_PATIENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище PolyclinicModelContainer">
+          <EntitySet Name="DEPARTAMENT" EntityType="Self.DEPARTAMENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DIAGNOSIS" EntityType="Self.DIAGNOSIS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DOCTORS" EntityType="Self.DOCTORS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MEDICAL_HISTORY" EntityType="Self.MEDICAL_HISTORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PATIENTS" EntityType="Self.PATIENTS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DOCTORS_DEPARTAMENT" Association="Self.FK_DOCTORS_DEPARTAMENT">
+            <End Role="DEPARTAMENT" EntitySet="DEPARTAMENT" />
+            <End Role="DOCTORS" EntitySet="DOCTORS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEDICAL HISTORY_DIAGNOSIS" Association="Self.FK_MEDICAL HISTORY_DIAGNOSIS">
+            <End Role="DIAGNOSIS" EntitySet="DIAGNOSIS" />
+            <End Role="MEDICAL_HISTORY" EntitySet="MEDICAL_HISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEDICAL HISTORY_DOCTORS" Association="Self.FK_MEDICAL HISTORY_DOCTORS">
+            <End Role="DOCTORS" EntitySet="DOCTORS" />
+            <End Role="MEDICAL_HISTORY" EntitySet="MEDICAL_HISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEDICAL HISTORY_PATIENTS" Association="Self.FK_MEDICAL HISTORY_PATIENTS">
+            <End Role="PATIENTS" EntitySet="PATIENTS" />
+            <End Role="MEDICAL_HISTORY" EntitySet="MEDICAL_HISTORY" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PolyclinicModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DEPARTAMENT">
+          <Key>
+            <PropertyRef Name="DEPARTAMENT_ID" />
+          </Key>
+          <Property Name="DEPARTAMENT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DEPARTAMENT_NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DEPARTAMENT_FLOOR" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DEPARTAMENT_MANAGER" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="DOCTORS" Relationship="Self.FK_DOCTORS_DEPARTAMENT" FromRole="DEPARTAMENT" ToRole="DOCTORS" />
+        </EntityType>
+        <EntityType Name="DIAGNOSIS">
+          <Key>
+            <PropertyRef Name="DIAGNOSIS_ID" />
+          </Key>
+          <Property Name="DIAGNOSIS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DIAGNOSIS_NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DIAGNOSIS_SIGNS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DIAGNOSIS_PERIOD" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DIAGNOSIS_PURPOSE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MEDICAL_HISTORY" Relationship="Self.FK_MEDICAL_HISTORY_DIAGNOSIS" FromRole="DIAGNOSIS" ToRole="MEDICAL_HISTORY" />
+        </EntityType>
+        <EntityType Name="DOCTORS">
+          <Key>
+            <PropertyRef Name="DOCTOR_ID" />
+          </Key>
+          <Property Name="DOCTOR_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DOCTOR_NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DOCTOR_SURNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DOCTOR_PATRONYMIC" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DOCTOR_POST" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DOCTOR_SCIENTIFIC" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DOCTOR_EXPERIENCE" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DOCTOR_ADRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DOCTOR_DEPARTAMENT_ID" Type="Int32" Nullable="false" />
+          <Property Name="DOCTOR_WORK" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DOCTOR_PHOTO" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DEPARTAMENT" Relationship="Self.FK_DOCTORS_DEPARTAMENT" FromRole="DOCTORS" ToRole="DEPARTAMENT" />
+          <NavigationProperty Name="MEDICAL_HISTORY" Relationship="Self.FK_MEDICAL_HISTORY_DOCTORS" FromRole="DOCTORS" ToRole="MEDICAL_HISTORY" />
+        </EntityType>
+        <EntityType Name="MEDICAL_HISTORY">
+          <Key>
+            <PropertyRef Name="HISTORY_ID" />
+          </Key>
+          <Property Name="HISTORY_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HISTORY_DOCTOR_ID" Type="Int32" Nullable="false" />
+          <Property Name="HISTORY_PATIENT_ID" Type="Int32" Nullable="false" />
+          <Property Name="HISTORY_DIAGNOSIS_ID" Type="Int32" Nullable="false" />
+          <Property Name="HISTORY_TREATMENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HISTORY_DATE_OFF_ILLNESS" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="HISTORY_DATE_OFF_RECOVERY" Type="DateTime" Precision="0" />
+          <Property Name="HISTORY_TYPE_OFF_TREARMENT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="DIAGNOSIS" Relationship="Self.FK_MEDICAL_HISTORY_DIAGNOSIS" FromRole="MEDICAL_HISTORY" ToRole="DIAGNOSIS" />
+          <NavigationProperty Name="DOCTORS" Relationship="Self.FK_MEDICAL_HISTORY_DOCTORS" FromRole="MEDICAL_HISTORY" ToRole="DOCTORS" />
+          <NavigationProperty Name="PATIENTS" Relationship="Self.FK_MEDICAL_HISTORY_PATIENTS" FromRole="MEDICAL_HISTORY" ToRole="PATIENTS" />
+        </EntityType>
+        <EntityType Name="PATIENTS">
+          <Key>
+            <PropertyRef Name="PATIENT_ID" />
+          </Key>
+          <Property Name="PATIENT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PATIENT_NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PATIENT_SURNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PATIENT_PATRONYMIC" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PATIENT_ADRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PATIENT_CITY" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PATIENT_BIRTHDATE" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PATIENT_GENDER" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PATIENT_AGE" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="MEDICAL_HISTORY" Relationship="Self.FK_MEDICAL_HISTORY_PATIENTS" FromRole="PATIENTS" ToRole="MEDICAL_HISTORY" />
+        </EntityType>
+        <Association Name="FK_DOCTORS_DEPARTAMENT">
+          <End Role="DEPARTAMENT" Type="Self.DEPARTAMENT" Multiplicity="1" />
+          <End Role="DOCTORS" Type="Self.DOCTORS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTAMENT">
+              <PropertyRef Name="DEPARTAMENT_ID" />
+            </Principal>
+            <Dependent Role="DOCTORS">
+              <PropertyRef Name="DOCTOR_DEPARTAMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MEDICAL_HISTORY_DIAGNOSIS">
+          <End Role="DIAGNOSIS" Type="Self.DIAGNOSIS" Multiplicity="1" />
+          <End Role="MEDICAL_HISTORY" Type="Self.MEDICAL_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DIAGNOSIS">
+              <PropertyRef Name="DIAGNOSIS_ID" />
+            </Principal>
+            <Dependent Role="MEDICAL_HISTORY">
+              <PropertyRef Name="HISTORY_DIAGNOSIS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MEDICAL_HISTORY_DOCTORS">
+          <End Role="DOCTORS" Type="Self.DOCTORS" Multiplicity="1" />
+          <End Role="MEDICAL_HISTORY" Type="Self.MEDICAL_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DOCTORS">
+              <PropertyRef Name="DOCTOR_ID" />
+            </Principal>
+            <Dependent Role="MEDICAL_HISTORY">
+              <PropertyRef Name="HISTORY_DOCTOR_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MEDICAL_HISTORY_PATIENTS">
+          <End Role="PATIENTS" Type="Self.PATIENTS" Multiplicity="1" />
+          <End Role="MEDICAL_HISTORY" Type="Self.MEDICAL_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PATIENTS">
+              <PropertyRef Name="PATIENT_ID" />
+            </Principal>
+            <Dependent Role="MEDICAL_HISTORY">
+              <PropertyRef Name="HISTORY_PATIENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PolyclinicEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DEPARTAMENT" EntityType="Self.DEPARTAMENT" />
+          <EntitySet Name="DIAGNOSIS" EntityType="Self.DIAGNOSIS" />
+          <EntitySet Name="DOCTORS" EntityType="Self.DOCTORS" />
+          <EntitySet Name="MEDICAL_HISTORY" EntityType="Self.MEDICAL_HISTORY" />
+          <EntitySet Name="PATIENTS" EntityType="Self.PATIENTS" />
+          <AssociationSet Name="FK_DOCTORS_DEPARTAMENT" Association="Self.FK_DOCTORS_DEPARTAMENT">
+            <End Role="DEPARTAMENT" EntitySet="DEPARTAMENT" />
+            <End Role="DOCTORS" EntitySet="DOCTORS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEDICAL_HISTORY_DIAGNOSIS" Association="Self.FK_MEDICAL_HISTORY_DIAGNOSIS">
+            <End Role="DIAGNOSIS" EntitySet="DIAGNOSIS" />
+            <End Role="MEDICAL_HISTORY" EntitySet="MEDICAL_HISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEDICAL_HISTORY_DOCTORS" Association="Self.FK_MEDICAL_HISTORY_DOCTORS">
+            <End Role="DOCTORS" EntitySet="DOCTORS" />
+            <End Role="MEDICAL_HISTORY" EntitySet="MEDICAL_HISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEDICAL_HISTORY_PATIENTS" Association="Self.FK_MEDICAL_HISTORY_PATIENTS">
+            <End Role="PATIENTS" EntitySet="PATIENTS" />
+            <End Role="MEDICAL_HISTORY" EntitySet="MEDICAL_HISTORY" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище PolyclinicModelContainer" CdmEntityContainer="PolyclinicEntities">
+          <EntitySetMapping Name="DEPARTAMENT">
+            <EntityTypeMapping TypeName="PolyclinicModel.DEPARTAMENT">
+              <MappingFragment StoreEntitySet="DEPARTAMENT">
+                <ScalarProperty Name="DEPARTAMENT_ID" ColumnName="DEPARTAMENT_ID" />
+                <ScalarProperty Name="DEPARTAMENT_NAME" ColumnName="DEPARTAMENT_NAME" />
+                <ScalarProperty Name="DEPARTAMENT_FLOOR" ColumnName="DEPARTAMENT_FLOOR" />
+                <ScalarProperty Name="DEPARTAMENT_MANAGER" ColumnName="DEPARTAMENT_MANAGER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DIAGNOSIS">
+            <EntityTypeMapping TypeName="PolyclinicModel.DIAGNOSIS">
+              <MappingFragment StoreEntitySet="DIAGNOSIS">
+                <ScalarProperty Name="DIAGNOSIS_ID" ColumnName="DIAGNOSIS_ID" />
+                <ScalarProperty Name="DIAGNOSIS_NAME" ColumnName="DIAGNOSIS_NAME" />
+                <ScalarProperty Name="DIAGNOSIS_SIGNS" ColumnName="DIAGNOSIS_SIGNS" />
+                <ScalarProperty Name="DIAGNOSIS_PERIOD" ColumnName="DIAGNOSIS_PERIOD" />
+                <ScalarProperty Name="DIAGNOSIS_PURPOSE" ColumnName="DIAGNOSIS_PURPOSE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DOCTORS">
+            <EntityTypeMapping TypeName="PolyclinicModel.DOCTORS">
+              <MappingFragment StoreEntitySet="DOCTORS">
+                <ScalarProperty Name="DOCTOR_ID" ColumnName="DOCTOR_ID" />
+                <ScalarProperty Name="DOCTOR_NAME" ColumnName="DOCTOR_NAME" />
+                <ScalarProperty Name="DOCTOR_SURNAME" ColumnName="DOCTOR_SURNAME" />
+                <ScalarProperty Name="DOCTOR_PATRONYMIC" ColumnName="DOCTOR_PATRONYMIC" />
+                <ScalarProperty Name="DOCTOR_POST" ColumnName="DOCTOR_POST" />
+                <ScalarProperty Name="DOCTOR_SCIENTIFIC" ColumnName="DOCTOR_SCIENTIFIC" />
+                <ScalarProperty Name="DOCTOR_EXPERIENCE" ColumnName="DOCTOR_EXPERIENCE" />
+                <ScalarProperty Name="DOCTOR_ADRESS" ColumnName="DOCTOR_ADRESS" />
+                <ScalarProperty Name="DOCTOR_DEPARTAMENT_ID" ColumnName="DOCTOR_DEPARTAMENT_ID" />
+                <ScalarProperty Name="DOCTOR_WORK" ColumnName="DOCTOR_WORK" />
+                <ScalarProperty Name="DOCTOR_PHOTO" ColumnName="DOCTOR_PHOTO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MEDICAL_HISTORY">
+            <EntityTypeMapping TypeName="PolyclinicModel.MEDICAL_HISTORY">
+              <MappingFragment StoreEntitySet="MEDICAL_HISTORY">
+                <ScalarProperty Name="HISTORY_ID" ColumnName="HISTORY_ID" />
+                <ScalarProperty Name="HISTORY_DOCTOR_ID" ColumnName="HISTORY_DOCTOR_ID" />
+                <ScalarProperty Name="HISTORY_PATIENT_ID" ColumnName="HISTORY_PATIENT_ID" />
+                <ScalarProperty Name="HISTORY_DIAGNOSIS_ID" ColumnName="HISTORY_DIAGNOSIS_ID" />
+                <ScalarProperty Name="HISTORY_TREATMENT" ColumnName="HISTORY_TREATMENT" />
+                <ScalarProperty Name="HISTORY_DATE_OFF_ILLNESS" ColumnName="HISTORY_DATE_OFF_ILLNESS" />
+                <ScalarProperty Name="HISTORY_DATE_OFF_RECOVERY" ColumnName="HISTORY_DATE_OFF_RECOVERY" />
+                <ScalarProperty Name="HISTORY_TYPE_OFF_TREARMENT" ColumnName="HISTORY_TYPE_OFF_TREARMENT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PATIENTS">
+            <EntityTypeMapping TypeName="PolyclinicModel.PATIENTS">
+              <MappingFragment StoreEntitySet="PATIENTS">
+                <ScalarProperty Name="PATIENT_ID" ColumnName="PATIENT_ID" />
+                <ScalarProperty Name="PATIENT_NAME" ColumnName="PATIENT_NAME" />
+                <ScalarProperty Name="PATIENT_SURNAME" ColumnName="PATIENT_SURNAME" />
+                <ScalarProperty Name="PATIENT_PATRONYMIC" ColumnName="PATIENT_PATRONYMIC" />
+                <ScalarProperty Name="PATIENT_ADRESS" ColumnName="PATIENT_ADRESS" />
+                <ScalarProperty Name="PATIENT_CITY" ColumnName="PATIENT_CITY" />
+                <ScalarProperty Name="PATIENT_BIRTHDATE" ColumnName="PATIENT_BIRTHDATE" />
+                <ScalarProperty Name="PATIENT_GENDER" ColumnName="PATIENT_GENDER" />
+                <ScalarProperty Name="PATIENT_AGE" ColumnName="PATIENT_AGE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
