@@ -5,8 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Garipov_PM01"
       mc:Ignorable="d" 
-      d:DesignHeight="500" d:DesignWidth="800"
-      Title="AddEditPage">
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="AddEditPage" FontFamily="Segoe UI">
     
   
 
@@ -22,7 +22,7 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="150"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -30,31 +30,31 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Фамилия" HorizontalAlignment="Center" Grid.Row="0"></TextBlock>
-        <TextBlock Text="Имя" HorizontalAlignment="Center" Grid.Row="1"></TextBlock>
-        <TextBlock Text="Отчество" HorizontalAlignment="Center" Grid.Row="2"></TextBlock>
-        <TextBlock Text="Должность" HorizontalAlignment="Center" Grid.Row="3"></TextBlock>
-        <TextBlock Text="Отделение" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center"></TextBlock>
-        <TextBlock Text="Образование" HorizontalAlignment="Center" Grid.Row="5"></TextBlock>
-        <TextBlock Text="Дата выхода на работу" HorizontalAlignment="Center" Grid.Row="6"></TextBlock>
-        <TextBlock  Text="Адрес" HorizontalAlignment="Center" Grid.Row="7"></TextBlock>
+        <TextBlock Text="Фамилия" HorizontalAlignment="Center" Grid.Row="0" FontWeight="Bold"></TextBlock>
+        <TextBlock Text="Имя" HorizontalAlignment="Center" Grid.Row="1" FontWeight="Bold"></TextBlock>
+        <TextBlock Text="Отчество" HorizontalAlignment="Center" Grid.Row="2" FontWeight="Bold"></TextBlock>
+        <TextBlock Text="Должность" HorizontalAlignment="Center" Grid.Row="3" FontWeight="Bold"></TextBlock>
+        <TextBlock Text="Отделение" HorizontalAlignment="Center" Grid.Row="4" FontWeight="Bold" VerticalAlignment="Center"></TextBlock>
+        <TextBlock Text="Образование" HorizontalAlignment="Center" Grid.Row="5" FontWeight="Bold"></TextBlock>
+        <TextBlock Text="Дата выхода на работу" HorizontalAlignment="Center" FontWeight="Bold" Grid.Row="6"></TextBlock>
+        <TextBlock  Text="Адрес" HorizontalAlignment="Center" FontWeight="Bold" Grid.Row="7"></TextBlock>
         
         <TextBox Text="{Binding DOCTOR_NAME}" Grid.Row="0" Grid.Column="1" Margin="5"></TextBox>
         <TextBox Text="{Binding DOCTOR_SURNAME}" Grid.Row="1" Grid.Column="1" Margin="5"></TextBox>
         <TextBox Text="{Binding DOCTOR_PATRONYMIC}" Grid.Row="2" Grid.Column="1" Margin="5"></TextBox>
         <TextBox Text="{Binding DOCTOR_POST}" Grid.Row="3" Grid.Column="1" Margin="5"></TextBox>
         <ComboBox Grid.Row="4" Grid.Column="1" FontSize="15" Height="30" Width="150" Name="ComboType" Margin="5" Padding="5">
-            <TextBlock>Педиатрия</TextBlock>
-            <TextBlock>Стоматология</TextBlock>
-            <TextBlock>Терапия</TextBlock>
-            <TextBlock>Хирургия</TextBlock>
-            <TextBlock>Неврология</TextBlock>
+            <TextBlock FontFamily="Segoe UI">Педиатрия</TextBlock>
+            <TextBlock FontFamily="Segoe UI">Стоматология</TextBlock>
+            <TextBlock FontFamily="Segoe UI">Терапия</TextBlock>
+            <TextBlock FontFamily="Segoe UI">Хирургия</TextBlock>
+            <TextBlock FontFamily="Segoe UI">Неврология</TextBlock>
         </ComboBox>
         <TextBox Text="{Binding DOCTOR_SCIENTIFIC}" Grid.Row="5" Grid.Column="1" Margin="5"></TextBox>
         <TextBox Text="{Binding DOCTOR_EXPERIENCE}" Grid.Row="6" Grid.Column="1" Margin="5"></TextBox>
         <TextBox Text="{Binding DOCTOR_ADRESS}" Grid.Row="7" Grid.Column="1" Margin="5"></TextBox>
 
-        <Button Name="UploadPhotoButton" Content="Загрузить фото" Grid.Column="1" Grid.Row="8" Click="UploadPhotoButton_Click" HorizontalAlignment="Center" Height="50"></Button>
+        <Button Name="UploadPhotoButton" Content="Загрузить фото" Grid.Column="1" Grid.Row="8" Click="UploadPhotoButton_Click" HorizontalAlignment="Center" Height="40" Width="150" FontWeight="Bold" FontFamily="Segoe UI"></Button>
         <Image Grid.Column="0" Grid.Row="8" HorizontalAlignment="Center" Name="_photo" Width="120" Height="120">
             <Image.Source>
                 <Binding Path="DOCTOR_PHOTO">
@@ -69,7 +69,7 @@
 
         </Image>
         <Button Name="SaveButton" Content="Сохранить" Grid.Row="9"
-                 Grid.ColumnSpan="2" Click="SaveButton_Click" Width="100"></Button>
+                 Grid.ColumnSpan="2" Click="SaveButton_Click" Width="150" Height="40" FontWeight="Bold" FontFamily="Segoe UI" ></Button>
 
     </Grid>
 </Page>

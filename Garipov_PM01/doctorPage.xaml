@@ -14,15 +14,17 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
+        <!-- Верхняя панель -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+            <!-- Поле поиска -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5" HorizontalAlignment="Left">
+                <TextBlock Text="Введите для поиска" VerticalAlignment="Center" Margin="5" FontSize="14" FontWeight="Bold"/>
+                <TextBox Width="250" Height="30" Name="SearchBox" VerticalAlignment="Center" Margin="5" TextChanged="SearchBox_TextChanged" FontFamily="Segoe UI"/>
+            </StackPanel>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
-            <TextBlock Text="Введите для поиска" VerticalAlignment="Center" Margin="5"/>
-            <TextBox Width="250" Height="30" Name="SearchBox" VerticalAlignment="Center" Margin="5" TextChanged="SearchBox_TextChanged" FontFamily="Segoe UI" />
-
-            <StackPanel Orientation="Vertical" Margin="5">
-
-                <TextBlock Text="Фильтрация по отделениям"></TextBlock>
-
+            <!-- Фильтрация по отделениям -->
+            <StackPanel Orientation="Vertical" Margin="5" HorizontalAlignment="Center">
+                <TextBlock Text="Фильтрация по отделениям" FontWeight="Bold" FontSize="14"/>
                 <ComboBox Name="DepartmentComboBox" Width="150" VerticalAlignment="Center" Margin="5" SelectionChanged="DepartmentComboBox_SelectionChanged">
                     <ComboBoxItem Content="Все отделения" />
                     <ComboBoxItem Content="Педиатрия" />
@@ -31,34 +33,34 @@
                     <ComboBoxItem Content="Хирургия" />
                     <ComboBoxItem Content="Неврология" />
                 </ComboBox>
-
             </StackPanel>
-            
-            
-
-            
-
-            
 
             <!-- Радиокнопки для сортировки -->
-            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="5">
-                <TextBlock Text="Сортировка по стажу" VerticalAlignment="Center" Margin="5"/>
-                <RadioButton Name="SortAscRadioButton" Content="От меньшего к большему"  GroupName="SortOrder" Checked="SortAscRadioButton_Checked"/>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center">
+                <TextBlock Text="Сортировка по стажу" FontSize="14" FontWeight="Bold"/>
+                <RadioButton Name="SortAscRadioButton" Content="От меньшего к большему" GroupName="SortOrder" Checked="SortAscRadioButton_Checked"/>
                 <RadioButton Name="SortDescRadioButton" Content="От большего к меньшему" GroupName="SortOrder" Checked="SortDescRadioButton_Checked"/>
             </StackPanel>
 
-            <Button Content="Добавить врача" Name="AddDoctor" Width="150" Click="AddDoctor_Click" FontFamily="Segoe UI" Foreground="#00796B" FontSize="14" Padding="10" Margin="0,10,0,10"></Button>
+            <!-- Кнопка добавления -->
+            <Button Content="Добавить врача" Name="AddDoctor" Width="150" Height="40" Click="AddDoctor_Click" FontWeight="Bold" FontFamily="Segoe UI" Foreground="#00796B" FontSize="14" Padding="10" Margin="5"  HorizontalAlignment="Right"/>
         </StackPanel>
 
-        <TextBlock Name="TBCount" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Bottom"></TextBlock>
+        <!-- Счетчик количества врачей -->
+        <TextBlock Name="TBCount" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"/>
 
-        
-
-
-        <ListView Name="DoctorListView" Grid.Row="1" Background="#FFFFFF" BorderBrush="#B2DFDB" SelectionChanged="DoctorListView_SelectionChanged" IsVisibleChanged="DoctorListView_IsVisibleChanged"  d:ItemsSource="{d:SampleData ItemCount=5}">
+        <!-- Список врачей -->
+        <ListView Name="DoctorListView" Grid.Row="1" Background="#FFFFFF" BorderBrush="#B2DFDB" SelectionChanged="DoctorListView_SelectionChanged" IsVisibleChanged="DoctorListView_IsVisibleChanged" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Padding" Value="10"/>
+                    <Setter Property="Margin" Value="5"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="#004D40"  CornerRadius="45" Margin="5" Padding="10" Background="#B2DFDB">
+                    <Border BorderBrush="#004D40" CornerRadius="25"  Background="#B2DFDB">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"></RowDefinition>
@@ -72,51 +74,59 @@
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="150"></ColumnDefinition>
+                                <ColumnDefinition Width="200"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="350"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
 
+                            <!-- Фотография врача -->
                             <Image Width="140" Height="140" Grid.RowSpan="7" Grid.Column="0" Stretch="UniformToFill" HorizontalAlignment="Center" Margin="10">
+                                <Image.Clip>
+                                    <RectangleGeometry Rect="0,0,140,140" RadiusX="25" RadiusY="25"/>
+                                </Image.Clip>
                                 <Image.Source>
                                     <Binding Path="DOCTOR_PHOTO">
                                         <Binding.TargetNullValue>
                                             <ImageSource>
                                                 image/picture.png
                                             </ImageSource>
-                                            
                                         </Binding.TargetNullValue>
                                     </Binding>
                                 </Image.Source>
                             </Image>
 
-                            <TextBlock Text="Имя: " Grid.Row="0" Grid.Column="1" FontWeight="Bold" Foreground="#004D40"/>
+
+
+                            <!-- Информация о враче -->
+                            <TextBlock Text="Имя: " Grid.Row="0" Grid.Column="1" FontWeight="Bold" Foreground="#004D40" />
                             <TextBlock Text="{Binding DOCTOR_NAME}" Grid.Row="0" Grid.Column="2" Foreground="#004D40"/>
 
-                            <TextBlock Text="Фамилия: " Grid.Row="1" Grid.Column="1" FontWeight="Bold" Foreground="#004D40"/>
+                            <TextBlock Text="Фамилия: " Grid.Row="1" Grid.Column="1" FontWeight="Bold" Foreground="#004D40" />
                             <TextBlock Text="{Binding DOCTOR_SURNAME}" Grid.Row="1" Grid.Column="2" Foreground="#004D40"/>
 
-                            <TextBlock Text="Отчество: " Grid.Row="2" Grid.Column="1" FontWeight="Bold" Foreground="#004D40"/>
+                            <TextBlock Text="Отчество: " Grid.Row="2" Grid.Column="1" FontWeight="Bold" Foreground="#004D40" />
                             <TextBlock Text="{Binding DOCTOR_PATRONYMIC}" Grid.Row="2" Grid.Column="2" Foreground="#004D40"/>
 
-                            <TextBlock Text="Должность: " Grid.Row="3" Grid.Column="1" FontWeight="Bold" Foreground="#004D40"/>
+                            <TextBlock Text="Должность: " Grid.Row="3" Grid.Column="1" FontWeight="Bold" Foreground="#004D40" />
                             <TextBlock Text="{Binding DOCTOR_POST}" Grid.Row="3" Grid.Column="2" Foreground="#004D40"/>
 
-                            <TextBlock Text="Образование: " Grid.Row="4" Grid.Column="1" FontWeight="Bold" Foreground="#004D40"/>
+                            <TextBlock Text="Образование: " Grid.Row="4" Grid.Column="1" FontWeight="Bold" Foreground="#004D40" />
                             <TextBlock Text="{Binding DOCTOR_SCIENTIFIC}" Grid.Row="4" Grid.Column="2" Foreground="#004D40"/>
 
-                            <TextBlock Text="Адрес: " Grid.Row="5" Grid.Column="1" FontWeight="Bold" Foreground="#004D40"/>
+                            <TextBlock Text="Адрес: " Grid.Row="5" Grid.Column="1" FontWeight="Bold" Foreground="#004D40" />
                             <TextBlock Text="{Binding DOCTOR_ADRESS}" Grid.Row="5" Grid.Column="2" Foreground="#004D40"/>
 
-                            <TextBlock Text="Стаж (в годах): " Grid.Row="6" Grid.Column="1" FontWeight="Bold" Foreground="#004D40"/>
+                            <TextBlock Text="Стаж (в годах): " Grid.Row="6" Grid.Column="1" FontWeight="Bold" Foreground="#004D40" />
                             <TextBlock Text="{Binding DOCTOR_WORK}" Grid.Row="6" Grid.Column="2" Foreground="#004D40"/>
-                            <TextBlock Text="Отделение:  " Grid.Row="7" Grid.Column="1" FontWeight="Bold" Foreground="#004D40"/>
+
+                            <TextBlock Text="Отделение: " Grid.Row="7" Grid.Column="1" FontWeight="Bold" Foreground="#004D40" />
                             <TextBlock Text="{Binding DEPART_NAME}" Grid.Row="7" Grid.Column="2" Foreground="#004D40"/>
 
-                            <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,10,0,0">
-                                <Button Content="Редактировать" Name="editDoctor" Width="150" Click="editDoctor_Click" FontFamily="Segoe UI" Foreground="#00796B" FontSize="14" Padding ="10" Margin="0,10,0,10" ></Button>
-                                <Button Content="Удалить" Name="deleteDoctor" Width="150" Click="deleteDoctor_Click" FontFamily="Segoe UI" Foreground="#00796B" FontSize="14" Padding="10" Margin="0,10,0,10" ></Button>
+                            <!-- Кнопки действия -->
+                            <StackPanel Orientation="Horizontal" Grid.RowSpan="7" Grid.Column="3" HorizontalAlignment="Right" Margin="0,10,0,0">
+                                <Button Content="Редактировать" FontWeight="Bold" Name="editDoctor" Width="150" Height="40" Click="editDoctor_Click" FontFamily="Segoe UI" Foreground="#00796B" FontSize="14" Padding="10" Margin="5"/>
+                                <Button Content="Удалить" FontWeight="Bold" Name="deleteDoctor" Width="150" Height="40" Click="deleteDoctor_Click" FontFamily="Segoe UI" Foreground="#00796B" FontSize="14" Padding="10" Margin="5"/>
                             </StackPanel>
-
                         </Grid>
                     </Border>
                 </DataTemplate>

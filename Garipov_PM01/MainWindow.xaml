@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Garipov_PM01"
         mc:Ignorable="d"
-        Title="Поликлиника" Height="600" Width="1000" MinWidth="1000" FontFamily="Lucida Sans" Icon="image/icon.ico"  >
-    <Grid>
+        Title="Поликлиника" Height="600" Width="1000" MinWidth="1000" FontFamily="Segoe UI" FontSize="18"  Icon="image/icon.ico"  >
+    <Grid Background="#E0F7FA">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -15,7 +15,7 @@
 
         
         <TextBlock Text="Поликлиника" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" ></TextBlock>
-        <Image Source="image/logo.png" Margin="-148,0,148,0" ></Image>
+        <Image Source="image/logo.png" Margin="-148,0,148,0" Width="100" Height="100"></Image>
 
        
         
